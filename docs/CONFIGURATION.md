@@ -2,7 +2,7 @@
 
 ## Overview
 
-The COMS Pytest framework uses YAML-based configuration files for managing environment-specific settings including API URLs, credentials, and endpoints.
+The COMS Pytest framework uses YAML-based configuration files for managing environment-specific settings including API URLs, UI URLs, credentials, and endpoints.
 
 ---
 
@@ -25,6 +25,7 @@ The COMS Pytest framework uses YAML-based configuration files for managing envir
 ```yaml
 # Base API URL
 base_url: "https://api.example.com"
+ui_base_url: "https://app.example.com"
 
 # Endpoints
 login_endpoint: "/api/v1/user/create/login"
@@ -45,6 +46,7 @@ verify_ssl: true
 | Field | Type | Required | Description | Example |
 |-------|------|----------|-------------|---------|
 | `base_url` | string | Yes | API base URL | `https://api.example.com` |
+| `ui_base_url` | string | No | UI base URL for Playwright tests | `https://app.example.com` |
 | `login_endpoint` | string | Yes | Login endpoint path | `/api/v1/user/login` |
 | `refresh_endpoint` | string | Yes | Token refresh endpoint path | `/api/v1/user/refreshToken` |
 | `credentials.email` | string | Yes | User email for authentication | `user@example.com` |
@@ -64,6 +66,7 @@ Used for local development and testing.
 
 ```yaml
 base_url: "https://api.example.com"
+ui_base_url: ""
 login_endpoint: "/api/v1/auth/login"
 refresh_endpoint: "/api/v1/auth/refresh"
 credentials:
@@ -71,7 +74,7 @@ credentials:
   password: "your-password"
 ```
 
-For public repositories, store real credentials in `config/dev.local.yaml`. The loader automatically prefers that private file over `config/dev.yaml`.
+For public repositories, store real credentials and any private UI URL in `config/dev.local.yaml`. The loader automatically prefers that private file over `config/dev.yaml`.
 
 ### Quality Assurance (qa)
 

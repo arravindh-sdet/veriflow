@@ -1,4 +1,5 @@
 base_url: "https://your-private-api-url.com"
+ui_base_url: "https://your-private-ui-url.com"
 login_endpoint: "/api/v1/auth/login"
 refresh_endpoint: "/api/v1/auth/refresh"
 credentials:

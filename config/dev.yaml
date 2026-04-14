@@ -1,4 +1,5 @@
 base_url: "https://api.example.com"
+ui_base_url: ""
 login_endpoint: "/api/v1/auth/login"
 refresh_endpoint: "/api/v1/auth/refresh"
 credentials:

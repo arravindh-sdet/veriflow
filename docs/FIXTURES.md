@@ -38,6 +38,7 @@ def test_with_config(config):
 **Available Properties**:
 ```python
 config["base_url"]              # API base URL
+config["ui_base_url"]           # UI base URL for Playwright tests
 config["login_endpoint"]        # Login endpoint
 config["refresh_endpoint"]      # Token refresh endpoint
 config["credentials"]["email"]  # User email
@@ -115,6 +116,53 @@ def test_with_refresh_token(refresh_token):
     assert refresh_token
     assert refresh_token.startswith("eyJ")
 ```
+
+### ui_base_url
+
+**Scope**: `session`
+
+**Returns**: UI base URL string from CLI or config
+
+**Usage**:
+```python
+def test_ui_config(ui_base_url):
+    if ui_base_url:
+        assert ui_base_url.startswith("http")
+```
+
+### ui_browser
+
+**Scope**: `session`
+
+**Returns**: Shared Playwright browser instance
+
+### ui_context
+
+**Scope**: `function`
+
+**Returns**: Isolated Playwright browser context per test
+
+### ui_page
+
+**Scope**: `function`
+
+**Returns**: Playwright page object for UI interactions
+
+**Usage**:
+```python
+def test_ui_page(ui_page, ui_base_url):
+    if not ui_base_url:
+        pytest.skip("Configure ui_base_url first")
+
+    ui_page.goto(ui_base_url)
+    assert ui_page.title()
+```
+
+### demo_ui_url
+
+**Scope**: `session`
+
+**Returns**: File URL for the bundled Playwright demo page
 
 ---
 
@@ -758,4 +806,3 @@ def my_fixture():
 - [API Client Guide](./API_CLIENT.md)
 - [Testing Guide](./TESTING_GUIDE.md)
 - [Configuration Guide](./CONFIGURATION.md)
-

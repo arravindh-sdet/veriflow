@@ -1,6 +1,6 @@
-# COMS Pytest - API Testing Framework
+# COMS Pytest - API and UI Testing Framework
 
-A comprehensive pytest-based API testing framework with advanced features including authentication, token refresh, allure reporting, and schema validation.
+A comprehensive pytest-based API and UI testing framework with advanced features including authentication, token refresh, Playwright UI automation, allure reporting, and schema validation.
 
 ## Table of Contents
 
@@ -18,10 +18,11 @@ A comprehensive pytest-based API testing framework with advanced features includ
 
 ## Overview
 
-COMS Pytest is a modern API testing framework built with:
+COMS Pytest is a modern API and UI testing framework built with:
 
 - **pytest** - Python testing framework
 - **requests** - HTTP client library
+- **Playwright** - Browser automation for UI testing
 - **allure-pytest** - Beautiful test reporting
 - **jsonschema** - JSON schema validation
 - **PyYAML** - Configuration management
@@ -32,6 +33,7 @@ COMS Pytest is a modern API testing framework built with:
 ✅ Automatic token refresh on expiration  
 ✅ Centralized configuration via YAML  
 ✅ Schema validation for API responses  
+✅ Playwright-powered UI smoke and interaction tests  
 ✅ Beautiful Allure HTML reports  
 ✅ Organized test suites by feature  
 ✅ Request/response logging  
@@ -85,6 +87,16 @@ COMS_Pytest/
 ├── conftest.py                      # Pytest fixtures & configuration
 ├── pytest.ini                       # Pytest configuration
 ├── requirements.txt                 # Python dependencies
+├── ui/                              # Playwright page objects
+│   └── pages/
+│       ├── base_page.py             # Shared page helpers
+│       └── demo_page.py             # Demo UI page object
+│
+├── tests/ui/                        # UI test suites
+│   ├── fixtures/demo_app.html       # Local demo page for Playwright
+│   ├── test_demo_page.py            # Self-contained UI tests
+│   └── test_live_ui_smoke.py        # Real app smoke test pattern
+│
 ├── reports/                         # HTML test reports
 ├── allure-results/                  # Allure report data
 └── allure-report/                   # Generated Allure HTML report
@@ -118,7 +130,12 @@ COMS_Pytest/
    pip install -r requirements.txt
    ```
 
-4. **Install Allure** (optional, for enhanced reporting)
+4. **Install Playwright browsers** (required for UI tests)
+   ```bash
+   python -m playwright install chromium
+   ```
+
+5. **Install Allure** (optional, for enhanced reporting)
    ```bash
    # macOS
    brew install allure
@@ -144,6 +161,7 @@ Configuration files are located in the `config/` directory. Each environment has
 
 ```yaml
 base_url: "https://api.example.com"
+ui_base_url: ""
 login_endpoint: "/api/v1/auth/login"
 refresh_endpoint: "/api/v1/auth/refresh"
 credentials:
@@ -158,6 +176,7 @@ For personal credentials, create `config/dev.local.yaml`. The loader will use th
 | Field | Description | Example |
 |-------|-------------|---------|
 | `base_url` | API base URL | `https://api.example.com` |
+| `ui_base_url` | UI base URL for Playwright tests | `https://app.example.com` |
 | `login_endpoint` | Authentication endpoint | `/api/v1/auth/login` |
 | `refresh_endpoint` | Token refresh endpoint | `/api/v1/auth/refresh` |
 | `credentials.email` | User email for login | `user@example.com` |
@@ -190,6 +209,12 @@ pytest tests/auth/test_login.py
 # Run specific test function
 pytest tests/auth/test_login.py::test_login
 
+# Run Playwright UI demo tests
+pytest tests/ui/test_demo_page.py -m ui
+
+# Run live UI smoke test against a real app
+pytest tests/ui/test_live_ui_smoke.py -m ui --ui-base-url https://your-ui-app.com
+
 # Run tests with specific marker
 pytest -m "order(1)"
 
@@ -198,6 +223,9 @@ pytest -v
 
 # Run with logs
 pytest -s
+
+# Run UI tests in headed mode
+pytest tests/ui -m ui --headed
 ```
 
 ### Advanced Options

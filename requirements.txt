@@ -1,6 +1,4 @@
 allure-python-commons
-allure-python-commons
-allure-python-commons
 pytest
 requests
 PyYAML
@@ -8,3 +6,4 @@ pytest-order
 pytest-html
 jsonschema
 allure-pytest
+playwright

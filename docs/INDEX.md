@@ -64,6 +64,12 @@ Welcome to the COMS Pytest Documentation! This index helps you find the right do
   - Common fixture patterns
   - **Read this to learn about fixtures**
 
+- **[UI Testing Guide](UI_TESTING.md)** 🖥️
+  - Playwright setup and browser install
+  - UI fixtures and page objects
+  - Demo and live smoke test patterns
+  - **Read this to add UI automation**
+
 ---
 
 ## 🎯 Quick Navigation by Task
@@ -440,4 +446,3 @@ Please report so it can be improved!
 **Version**: 1.0.0
 
 Happy testing! 🚀
-
